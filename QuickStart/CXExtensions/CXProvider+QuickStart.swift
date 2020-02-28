@@ -12,7 +12,7 @@ extension CXProviderConfiguration {
     static var `default`: CXProviderConfiguration {
         let providerConfiguration = CXProviderConfiguration(localizedName: "com.sendbird.quickstart.calls.cxprovider")
         
-        providerConfiguration.supportsVideo = false
+        providerConfiguration.supportsVideo = true
         providerConfiguration.maximumCallsPerCallGroup = 1
         providerConfiguration.supportedHandleTypes = [.generic]
         

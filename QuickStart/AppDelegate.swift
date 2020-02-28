@@ -100,7 +100,7 @@ extension AppDelegate: PKPushRegistryDelegate {
                 let name = ""
                 let update = CXCallUpdate()
                 update.remoteHandle = CXHandle(type: .generic, value: name)
-                update.hasVideo = false
+//                update.hasVideo = false
                 
                 // Report the incoming call to the system
                 self.provider.reportNewIncomingCall(with: uuid, update: update) { error in
