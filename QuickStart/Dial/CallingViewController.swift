@@ -22,6 +22,9 @@ class CallingViewController: UIViewController {
     @IBOutlet weak var endButton: UIButton!
     @IBOutlet weak var callTimerLabel: UILabel!
     
+    @IBOutlet weak var localVideoView: UIView!
+    @IBOutlet weak var remoteVideoView: UIView!
+    
     var call: DirectCall!
     var isDialing: Bool?
     
@@ -29,6 +32,12 @@ class CallingViewController: UIViewController {
     // MARK: - SendBirdCall - DirectCallDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let localSBView = SendBirdVideoView(on: self.localVideoView)
+        let remoteSBView = SendBirdVideoView(on: self.remoteVideoView)
+        
+        self.call.updateLocalView(localSBView)
+        self.call.updateRemoteView(remoteSBView)
         
         self.call.delegate = self
         
@@ -49,6 +58,9 @@ class CallingViewController: UIViewController {
     
     func setupUI() {
         // Remote Info
+        self.remoteVideoView?.isHidden = true
+        self.localVideoView?.isHidden = true
+        
         self.callTimerLabel.text = "Waiting for connection..."
         
         let profileURL = self.call.remoteUser?.profileURL
@@ -76,6 +88,20 @@ class CallingViewController: UIViewController {
         guard let sender = sender else { return }
         sender.isSelected.toggle()
         self.updateLocalAudio(enabled: sender.isSelected)
+    }
+    
+    @IBAction func didTapToggleVideo(_ sender: UIButton?) {
+        guard let sender = sender else { return }
+        sender.isSelected.toggle()
+        self.updateLocalVideo(enabled: sender.isSelected)
+    }
+    
+    func updateLocalVideo(enabled: Bool) {
+        if enabled {
+            self.call.startVideo()
+        } else {
+            self.call.stopVideo()
+        }
     }
     
     @IBAction func didTapEnd() {
@@ -203,6 +229,8 @@ extension CallingViewController: DirectCallDelegate {
         DispatchQueue.main.async {
             self.activeTimer()      // call.duration
             self.updateRemoteAudio(isOn: self.call.isRemoteAudioEnabled)
+            self.remoteVideoView?.isHidden = false
+            self.localVideoView?.isHidden = false
         }
     }
     
@@ -210,6 +238,12 @@ extension CallingViewController: DirectCallDelegate {
     func didRemoteAudioSettingsChange(_ call: DirectCall) {
         DispatchQueue.main.async {
             self.updateRemoteAudio(isOn: call.isRemoteAudioEnabled)
+        }
+    }
+    
+    func didRemoteVideoSettingsChange(_ call: DirectCall) {
+        print("[I AM HERE!!!] \(#function)")
+        DispatchQueue.main.async {
         }
     }
     

@@ -252,6 +252,19 @@
                                 <color key="textColor" red="0.50980392159999999" green="0.36862745099999999" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for connecting..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7CM-Ub-aCb">
+                                <rect key="frame" x="40" y="370.5" width="334" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jae-VE-I9E">
+                                <rect key="frame" x="237" y="438" width="137" height="231"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="137" id="3Nz-0i-fUF"/>
+                                    <constraint firstAttribute="height" constant="231" id="WQ4-cg-KzF"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" alpha="0.84999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KBm-GP-Ubc">
                                 <rect key="frame" x="177" y="712" width="60" height="60"/>
                                 <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -279,11 +292,6 @@
                                     <action selector="didTapAudioOption:" destination="7ra-kc-2Kq" eventType="touchUpInside" id="Oe7-ju-0lB"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for connecting..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7CM-Ub-aCb">
-                                <rect key="frame" x="40" y="370.5" width="334" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1b-0Y-eRW">
                                 <rect key="frame" x="85" y="712" width="60" height="60"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -291,8 +299,26 @@
                                 <state key="normal" backgroundImage="icChatAudioPurple">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3yP-v6-ajz">
+                                <rect key="frame" x="40" y="438" width="137" height="231"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="137" id="jTh-YL-c2w"/>
+                                    <constraint firstAttribute="height" constant="231" id="vJO-uJ-5cQ"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKK-WJ-ivt">
+                                <rect key="frame" x="40" y="802" width="334" height="40"/>
+                                <color key="backgroundColor" red="0.50980392159999999" green="0.36862745099999999" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ZhW-kQ-KM7"/>
+                                </constraints>
+                                <state key="normal" title="toggle video">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
-                                    <action selector="didTapSpeakerButton" destination="7ra-kc-2Kq" eventType="touchUpInside" id="hUc-LE-yzK"/>
+                                    <action selector="didTapToggleVideo:" destination="7ra-kc-2Kq" eventType="touchUpInside" id="Tdv-qD-F91"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -306,23 +332,32 @@
                             <constraint firstItem="k1b-0Y-eRW" firstAttribute="centerY" secondItem="KBm-GP-Ubc" secondAttribute="centerY" id="NbQ-us-Xlc"/>
                             <constraint firstItem="KBm-GP-Ubc" firstAttribute="centerX" secondItem="8JT-d3-eu4" secondAttribute="centerX" id="O21-cc-ys0"/>
                             <constraint firstItem="k1b-0Y-eRW" firstAttribute="width" secondItem="KBm-GP-Ubc" secondAttribute="width" id="Pas-Xj-2Yh"/>
+                            <constraint firstItem="eKK-WJ-ivt" firstAttribute="leading" secondItem="8JT-d3-eu4" secondAttribute="leading" constant="40" id="Qch-mX-RqY"/>
                             <constraint firstItem="7CM-Ub-aCb" firstAttribute="leading" secondItem="8JT-d3-eu4" secondAttribute="leading" constant="40" id="T03-LF-FWu"/>
                             <constraint firstItem="wks-Dh-Pes" firstAttribute="top" secondItem="8JT-d3-eu4" secondAttribute="top" constant="132" id="VzL-BN-bz8"/>
                             <constraint firstItem="yed-ha-XKA" firstAttribute="centerY" secondItem="KBm-GP-Ubc" secondAttribute="centerY" id="XUT-kd-MBb"/>
                             <constraint firstItem="fBW-rp-CDp" firstAttribute="leading" secondItem="8JT-d3-eu4" secondAttribute="leading" constant="40" id="aLI-4O-M4K"/>
+                            <constraint firstItem="Jae-VE-I9E" firstAttribute="top" secondItem="7CM-Ub-aCb" secondAttribute="bottom" constant="46.5" id="c9K-s3-eMn"/>
+                            <constraint firstItem="3yP-v6-ajz" firstAttribute="leading" secondItem="8JT-d3-eu4" secondAttribute="leading" constant="40" id="dGu-ND-LPr"/>
                             <constraint firstItem="8JT-d3-eu4" firstAttribute="bottom" secondItem="KBm-GP-Ubc" secondAttribute="bottom" constant="90" id="dvn-6D-cUn"/>
+                            <constraint firstItem="8JT-d3-eu4" firstAttribute="trailing" secondItem="eKK-WJ-ivt" secondAttribute="trailing" constant="40" id="kq3-FD-QsD"/>
                             <constraint firstItem="wks-Dh-Pes" firstAttribute="centerX" secondItem="8JT-d3-eu4" secondAttribute="centerX" id="lXI-2l-dzy"/>
+                            <constraint firstItem="8JT-d3-eu4" firstAttribute="trailing" secondItem="Jae-VE-I9E" secondAttribute="trailing" constant="40" id="mMN-b0-Q7o"/>
                             <constraint firstItem="yed-ha-XKA" firstAttribute="leading" secondItem="KBm-GP-Ubc" secondAttribute="trailing" constant="32" id="pft-6Z-RI6"/>
+                            <constraint firstItem="3yP-v6-ajz" firstAttribute="top" secondItem="7CM-Ub-aCb" secondAttribute="bottom" constant="46.5" id="rZh-zw-Vc5"/>
                             <constraint firstItem="k1b-0Y-eRW" firstAttribute="height" secondItem="KBm-GP-Ubc" secondAttribute="height" id="uXu-q2-hy6"/>
+                            <constraint firstItem="8JT-d3-eu4" firstAttribute="bottom" secondItem="eKK-WJ-ivt" secondAttribute="bottom" constant="20" id="uy4-xU-wzy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8JT-d3-eu4"/>
                     </view>
                     <connections>
                         <outlet property="callTimerLabel" destination="7CM-Ub-aCb" id="WIe-t9-QVr"/>
                         <outlet property="endButton" destination="KBm-GP-Ubc" id="CFr-aP-lAO"/>
+                        <outlet property="localVideoView" destination="Jae-VE-I9E" id="yC9-o1-Z6n"/>
                         <outlet property="muteAudioButton" destination="yed-ha-XKA" id="G7A-qJ-qIB"/>
                         <outlet property="nameLabel" destination="fBW-rp-CDp" id="SAK-Ky-Geg"/>
                         <outlet property="profileImageView" destination="wks-Dh-Pes" id="zoU-9L-b82"/>
+                        <outlet property="remoteVideoView" destination="3yP-v6-ajz" id="sbd-r1-3uJ"/>
                         <outlet property="speakerButton" destination="k1b-0Y-eRW" id="c9a-dA-jj9"/>
                     </connections>
                 </viewController>
