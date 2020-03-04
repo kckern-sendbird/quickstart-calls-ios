@@ -11,17 +11,21 @@ import SendBirdCalls
 
 class DialViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var calleeIdTextField: UITextField!
-    @IBOutlet weak var dialButton: UIButton!
+    @IBOutlet weak var voiceCallButton: UIButton!
+    @IBOutlet weak var videoCallButton: UIButton!
 
     @IBOutlet weak var textFieldBottomConstraint: NSLayoutConstraint!   // For interaction with audio setting switch
     @IBOutlet weak var dialButtonCenterConstraint: NSLayoutConstraint!  // For interaction with keyboard
     
     @IBOutlet weak var audioMutedView: UIView!
     @IBOutlet weak var audioMutedSwitch: UISwitch!
+    @IBOutlet weak var videoSwitch: UISwitch!
     
     var isMyAudioEnabled: Bool {
         return audioMutedSwitch.isOn
     }
+    
+    var isMyVideoEnabled: Bool { videoSwitch.isOn }
     
     // MARK: Override Methods
     override func viewDidLoad() {
@@ -36,9 +40,13 @@ class DialViewController: UIViewController, UITextFieldDelegate {
     func setupUI() {
         self.calleeIdTextField.placeholder = "Enter User ID You Want to Call"
         
-        self.dialButton.smoothAndWider()
-        self.dialButton.setTitle("Call")
-        self.dialButton.isEnabled = false
+        self.voiceCallButton.smoothAndWider()
+        self.voiceCallButton.setTitle("Voice Call")
+        self.voiceCallButton.isEnabled = false
+        
+        self.videoCallButton.smoothAndWider()
+        self.videoCallButton.setTitle("Video Call")
+        self.videoCallButton.isEnabled = false
         
         self.audioMutedView.alpha = 0.0
         self.textFieldBottomConstraint.constant = 16
@@ -49,9 +57,12 @@ class DialViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Calling", let callingVC = segue.destination as? CallingViewController, let call = sender as? DirectCall {
-            callingVC.isDialing = true
-            callingVC.call = call
+        if segue.identifier == "Voice", let voiceVC = segue.destination as? VoiceViewController, let call = sender as? DirectCall {
+            voiceVC.isDialing = true
+            voiceVC.call = call
+        } else if segue.identifier == "Video", let videoVC = segue.destination as? VideoViewController, let call = sender as? DirectCall {
+            videoVC.isDialing = true
+            videoVC.call = call
         }
     }
     
@@ -64,17 +75,17 @@ class DialViewController: UIViewController, UITextFieldDelegate {
 // MARK: - User Interaction with SendBirdCall
 extension DialViewController {
     
-    @IBAction func didTapDial() {
+    @IBAction func didTapVoiceCall() {
         guard let calleeId = calleeIdTextField.filteredText, !calleeId.isEmpty else { return }
-        self.dialButton.isEnabled = false
+        self.voiceCallButton.isEnabled = false
         
         // MARK: SendBirdCall.dial()
-        let callOptions = CallOptions(isAudioEnabled: self.isMyAudioEnabled, isVideoEnabled: true)
-        let dialParams = DialParams(calleeId: calleeId, isVideoCall: true, callOptions: callOptions, customItems: [:])
+        let callOptions = CallOptions(isAudioEnabled: self.isMyAudioEnabled, isVideoEnabled: false)
+        let dialParams = DialParams(calleeId: calleeId, isVideoCall: false, callOptions: callOptions, customItems: [:])
 
         SendBirdCall.dial(with: dialParams) { call, error in
             DispatchQueue.main.async {
-                self.dialButton.isEnabled = true
+                self.voiceCallButton.isEnabled = true
             }
             
             guard error == nil, let call = call else {
@@ -85,7 +96,33 @@ extension DialViewController {
             }
             
             DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "Calling", sender: call)
+                self.performSegue(withIdentifier: "Voice", sender: call)
+            }
+        }
+    }
+    
+    @IBAction func didTapVideoCall() {
+        guard let calleeId = calleeIdTextField.filteredText, !calleeId.isEmpty else { return }
+        self.videoCallButton.isEnabled = false
+        
+        // MARK: SendBirdCall.dial()
+        let callOptions = CallOptions(isAudioEnabled: self.isMyAudioEnabled, isVideoEnabled: self.isMyVideoEnabled)
+        let dialParams = DialParams(calleeId: calleeId, isVideoCall: true, callOptions: callOptions, customItems: [:])
+
+        SendBirdCall.dial(with: dialParams) { call, error in
+            DispatchQueue.main.async {
+                self.videoCallButton.isEnabled = true
+            }
+            
+            guard error == nil, let call = call else {
+                DispatchQueue.main.async {
+                    self.alertError(message: "Failed to call\nError: \(String(describing: error?.localizedDescription))")
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "Video", sender: call)
             }
         }
     }
@@ -122,7 +159,8 @@ extension DialViewController {
                 
                 self.textFieldBottomConstraint.constant = self.textFieldBottomConstraint.constant + gap
             }
-            self.dialButton.alpha = 0.0
+            self.voiceCallButton.alpha = 0.0
+            self.videoCallButton.alpha = 0.0
             self.view.layoutIfNeeded()
         }
 
@@ -138,8 +176,10 @@ extension DialViewController {
             hideMuteOptionView = false
         }
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            self.dialButton.alpha = 1.0
-            self.dialButton.isEnabled = true
+            self.voiceCallButton.alpha = 1.0
+            self.voiceCallButton.isEnabled = true
+            self.videoCallButton.alpha = 1.0
+            self.videoCallButton.isEnabled = true
             self.audioMutedView.alpha = hideMuteOptionView ? 0.0 : 1.0
             self.textFieldBottomConstraint.constant = value
             self.view.layoutIfNeeded()

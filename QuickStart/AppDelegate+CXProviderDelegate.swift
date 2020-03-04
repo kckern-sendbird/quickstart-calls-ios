@@ -38,20 +38,36 @@ extension AppDelegate: CXProviderDelegate {
         let acceptParams = AcceptParams(callOptions: callOptions)
         call.accept(with: acceptParams)
         
-        AVAudioSession.default.update()
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "CallingViewController")
-        guard let callingVC = viewController as? CallingViewController else { return } // If there is termination: Failed to load CallingViewController from Main.storyboard. Please check its storyboard ID")
-                                        
-        callingVC.call = call
-        callingVC.isDialing = false
         
-        if let topViewController = UIViewController.topViewController {
-            topViewController.present(callingVC, animated: true, completion: nil)
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        var viewController: UIViewController?
+        if call.isVideoCall {
+            viewController = storyboard.instantiateViewController(withIdentifier: "VideoViewController")
+            guard let videoVC = viewController as? VideoViewController else { return }
+            videoVC.call = call
+            videoVC.isDialing = false
+            
+            if let topViewController = UIViewController.topViewController {
+                topViewController.present(videoVC, animated: true, completion: nil)
+            } else {
+                UIApplication.shared.keyWindow?.rootViewController = videoVC
+                UIApplication.shared.keyWindow?.makeKeyAndVisible()
+            }
         } else {
-            UIApplication.shared.keyWindow?.rootViewController = callingVC
-            UIApplication.shared.keyWindow?.makeKeyAndVisible()
+            viewController = storyboard.instantiateViewController(withIdentifier: "VoiceViewController")
+            guard let voiceVC = viewController as? VoiceViewController else { return }
+            voiceVC.call = call
+            voiceVC.isDialing = false
+            
+            if let topViewController = UIViewController.topViewController {
+                topViewController.present(voiceVC, animated: true, completion: nil)
+            } else {
+                UIApplication.shared.keyWindow?.rootViewController = voiceVC
+                UIApplication.shared.keyWindow?.makeKeyAndVisible()
+            }
         }
+        // If there is termination: Failed to load VoiceViewController from Main.storyboard. Please check its storyboard ID")
+        
         // Signal to the system that the action has been successfully performed.
         action.fulfill()
     }

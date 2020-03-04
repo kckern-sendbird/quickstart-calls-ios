@@ -1,8 +1,8 @@
 //
-//  CallingViewController.swift
+//  VideoViewController.swift
 //  QuickStart
 //
-//  Copyright © 2020 SendBird, Inc. All rights reserved.
+//  Copyright © 2020 SendBird Inc. All rights reserved.
 //
 
 import UIKit
@@ -12,14 +12,17 @@ import CallKit
 import AVFoundation
 import SendBirdCalls
 
-class CallingViewController: UIViewController {
+class VideoViewController: UIViewController {
     
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var remoteUserProfileView: UIImageView!
+    @IBOutlet weak var localUserProfileView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
     @IBOutlet weak var speakerButton: UIButton!
+    @IBOutlet weak var stopVideoButton: UIButton!
     @IBOutlet weak var muteAudioButton: UIButton!
     @IBOutlet weak var endButton: UIButton!
+    
     @IBOutlet weak var callTimerLabel: UILabel!
     
     @IBOutlet weak var localVideoView: UIView!
@@ -58,22 +61,30 @@ class CallingViewController: UIViewController {
     
     func setupUI() {
         // Remote Info
-        self.remoteVideoView?.isHidden = true
-        self.localVideoView?.isHidden = true
+//        self.remoteVideoView?.isHidden = true
+//        self.localVideoView?.isHidden = true
         
         self.callTimerLabel.text = "Waiting for connection..."
         
-        let profileURL = self.call.remoteUser?.profileURL
-        self.profileImageView.setImage(urlString: profileURL)
+        let remoteProfileURL = self.call.remoteUser?.profileURL
+        self.remoteUserProfileView.setImage(urlString: remoteProfileURL)
+        
+        let localProfileURL = self.call.localUser?.profileURL
+        self.localUserProfileView.setImage(urlString: localProfileURL)
         
         self.nameLabel.text = self.call.remoteUser?.userId
         self.updateRemoteAudio(isOn: self.call.isRemoteAudioEnabled)
         
-        // Local Info
+        // Local Audio
         let audioButtonImage: UIImage? = call.isLocalAudioEnabled ? .unmutedAudioImage : .mutedAudioImage
         self.muteAudioButton.isSelected = !self.call.isLocalAudioEnabled
         self.muteAudioButton.setImage(audioButtonImage, for: .normal)
         self.muteAudioButton.rounding()
+        
+        // Local Video
+        let videoButtonImage: UIImage? = call.isLocalVideoEnabled ? .startVideoImage : .stopVideoImage
+        self.stopVideoButton.isSelected = !self.call.isLocalVideoEnabled
+        self.stopVideoButton.setImage(videoButtonImage, for: .normal)
         
         self.endButton.rounding()
         
@@ -96,13 +107,6 @@ class CallingViewController: UIViewController {
         self.updateLocalVideo(enabled: sender.isSelected)
     }
     
-    func updateLocalVideo(enabled: Bool) {
-        if enabled {
-            self.call.startVideo()
-        } else {
-            self.call.stopVideo()
-        }
-    }
     
     @IBAction func didTapEnd() {
         self.endButton.isEnabled = false
@@ -136,7 +140,7 @@ class CallingViewController: UIViewController {
 }
 
 // MARK: - Audio I/O
-extension CallingViewController {
+extension VideoViewController {
     func setAudioOutputsView() {
         self.speakerButton.rounding()
         self.speakerButton.layer.borderColor = UIColor.purple.cgColor
@@ -168,13 +172,15 @@ extension CallingViewController {
 }
 
 // MARK: - SendBirdCall - DirectCall duration & mute / unmute
-extension CallingViewController {
+extension VideoViewController {
     func updateLocalAudio(enabled: Bool) {
         if enabled {
             self.muteAudioButton.setImage(UIImage.mutedAudioImage, for: .normal)
+            self.localUserProfileView.alpha = 0.3
             call?.muteMicrophone()
         } else {
             self.muteAudioButton.setImage(UIImage.unmutedAudioImage, for: .normal)
+            self.localUserProfileView.alpha = 1.0
             call?.unmuteMicrophone()
         }
     }
@@ -182,12 +188,31 @@ extension CallingViewController {
     func updateRemoteAudio(isOn: Bool) {
         DispatchQueue.main.async {
             if isOn {
-                self.profileImageView.alpha = 1.0
+                self.remoteUserProfileView.alpha = 1.0
             } else {
-                self.profileImageView.alpha = 0.3
+                self.remoteUserProfileView.alpha = 0.3
             }
         }
     }
+    
+    func updateLocalVideo(enabled: Bool) {
+        if enabled {
+            self.call.startVideo()
+        } else {
+            self.call.stopVideo()
+        }
+    }
+    
+    func updateRemoteVideo(enabled: Bool) {
+        DispatchQueue.main.async {
+            if enabled {
+                self.remoteUserProfileView.alpha = 1.0
+            } else {
+                self.remoteUserProfileView.alpha = 0.3
+            }
+        }
+    }
+    
     
     func activeTimer() {
         self.callTimerLabel.text = "00:00"
@@ -217,7 +242,7 @@ extension CallingViewController {
 
 
 // MARK: - SendBirdCall - DirectCallDelegate
-extension CallingViewController: DirectCallDelegate {
+extension VideoViewController: DirectCallDelegate {
     func didEstablish(_ call: DirectCall) {
         DispatchQueue.main.async {
             self.callTimerLabel.text = "Connecting..."
@@ -229,8 +254,8 @@ extension CallingViewController: DirectCallDelegate {
         DispatchQueue.main.async {
             self.activeTimer()      // call.duration
             self.updateRemoteAudio(isOn: self.call.isRemoteAudioEnabled)
-            self.remoteVideoView?.isHidden = false
-            self.localVideoView?.isHidden = false
+//            self.remoteVideoView?.isHidden = false
+//            self.localVideoView?.isHidden = false
         }
     }
     
@@ -244,6 +269,7 @@ extension CallingViewController: DirectCallDelegate {
     func didRemoteVideoSettingsChange(_ call: DirectCall) {
         print("[I AM HERE!!!] \(#function)")
         DispatchQueue.main.async {
+            
         }
     }
     

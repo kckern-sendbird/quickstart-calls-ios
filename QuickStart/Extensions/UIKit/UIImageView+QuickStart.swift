@@ -47,4 +47,20 @@ extension UIImage {
             }
         }
     }
+    
+    static var stopVideoImage: UIImage? {
+        if #available(iOS 13.0, *) {
+            return UIImage(systemName: "video.fill")
+        } else {
+            return UIImage(named: "icon_video_stop")
+        }
+    }
+    
+    static var startVideoImage: UIImage? {
+        if #available(iOS 13.0, *) {
+            return UIImage(systemName: "video.slash.fill")
+        } else {
+            return UIImage(named: "icon_video_start")
+        }
+    }
 }
