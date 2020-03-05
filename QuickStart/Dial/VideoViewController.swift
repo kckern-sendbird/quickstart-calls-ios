@@ -197,9 +197,11 @@ extension VideoViewController {
     
     func updateLocalVideo(enabled: Bool) {
         if enabled {
-            self.call.startVideo()
-        } else {
+            self.stopVideoButton.setImage(UIImage.stopVideoImage, for: .normal)
             self.call.stopVideo()
+        } else {
+            self.stopVideoButton.setImage(UIImage.startVideoImage, for: .normal)
+            self.call.startVideo()
         }
     }
     
