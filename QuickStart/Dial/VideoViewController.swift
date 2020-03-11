@@ -25,8 +25,8 @@ class VideoViewController: UIViewController {
     
     @IBOutlet weak var callTimerLabel: UILabel!
     
-    @IBOutlet weak var localVideoView: UIView!
-    @IBOutlet weak var remoteVideoView: UIView!
+    @IBOutlet weak var localVideoView: UIView?
+    @IBOutlet weak var remoteVideoView: UIView?
     
     var call: DirectCall!
     var isDialing: Bool?
@@ -36,11 +36,16 @@ class VideoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let localSBView = SendBirdVideoView(on: self.localVideoView)
-        let remoteSBView = SendBirdVideoView(on: self.remoteVideoView)
-        
-        self.call.updateLocalView(localSBView)
-        self.call.updateRemoteView(remoteSBView)
+        DispatchQueue.main.async {
+            let localSBView = SendBirdVideoView(frame: self.localVideoView?.frame ?? CGRect.zero)
+            let remoteSBView = SendBirdVideoView(frame: self.remoteVideoView?.frame ?? CGRect.zero)
+            
+            self.call.updateLocalVideoView(localSBView)
+            self.call.updateRemoteVideoView(remoteSBView)
+            
+            self.localVideoView?.embed(localSBView)
+            self.remoteVideoView?.embed(remoteSBView)
+        }
         
         self.call.delegate = self
         

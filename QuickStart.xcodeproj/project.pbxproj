@@ -19,6 +19,7 @@
 		A955E5DA240E72960077926D /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A955E5D9240E72960077926D /* VideoViewController.swift */; };
 		A99449592387E92400A4FFBB /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99449582387E92400A4FFBB /* AccountTableViewController.swift */; };
 		A994495D2387F22F00A4FFBB /* UIViewController+QuickStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A994495C2387F22F00A4FFBB /* UIViewController+QuickStart.swift */; };
+		A998606024162282006C87C7 /* UIView+QuickStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A998605F24162282006C87C7 /* UIView+QuickStart.swift */; };
 		A99CC94A23BA142F00F9116A /* UIImageView+QuickStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99CC94923BA142F00F9116A /* UIImageView+QuickStart.swift */; };
 		A99CC94E23BA145F00F9116A /* UIButton+QuickStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99CC94D23BA145F00F9116A /* UIButton+QuickStart.swift */; };
 		A99CC95023BA14A100F9116A /* UIColor+QuickStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99CC94F23BA14A100F9116A /* UIColor+QuickStart.swift */; };
@@ -53,6 +54,7 @@
 		A955E5D9240E72960077926D /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		A99449582387E92400A4FFBB /* AccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		A994495C2387F22F00A4FFBB /* UIViewController+QuickStart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+QuickStart.swift"; sourceTree = "<group>"; };
+		A998605F24162282006C87C7 /* UIView+QuickStart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+QuickStart.swift"; sourceTree = "<group>"; };
 		A99CC94923BA142F00F9116A /* UIImageView+QuickStart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+QuickStart.swift"; sourceTree = "<group>"; };
 		A99CC94D23BA145F00F9116A /* UIButton+QuickStart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+QuickStart.swift"; sourceTree = "<group>"; };
 		A99CC94F23BA14A100F9116A /* UIColor+QuickStart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+QuickStart.swift"; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				A99CC95723BA152D00F9116A /* NSLayoutConstraint+QuickStart.swift */,
 				A99CC95323BA14CA00F9116A /* UITextView+QuickStart.swift */,
 				A99CC95123BA14BC00F9116A /* UITextField+QuickStart.swift */,
+				A998605F24162282006C87C7 /* UIView+QuickStart.swift */,
 				A994495C2387F22F00A4FFBB /* UIViewController+QuickStart.swift */,
 				A99CC94F23BA14A100F9116A /* UIColor+QuickStart.swift */,
 				A99CC94923BA142F00F9116A /* UIImageView+QuickStart.swift */,
@@ -349,6 +352,7 @@
 				A9409C482390FA8E00410458 /* NotificationCenter+QuickStart.swift in Sources */,
 				5281EB6E23A8602300EDA984 /* CXCallController+QuickStart.swift in Sources */,
 				A9A72CA52387B448007C0878 /* AppDelegate.swift in Sources */,
+				A998606024162282006C87C7 /* UIView+QuickStart.swift in Sources */,
 				C1F69B0F23C5A4E300C66F00 /* CXProvider+QuickStart.swift in Sources */,
 				A99CC95023BA14A100F9116A /* UIColor+QuickStart.swift in Sources */,
 				A951A7A7238CC4DF00410E40 /* DialViewController.swift in Sources */,

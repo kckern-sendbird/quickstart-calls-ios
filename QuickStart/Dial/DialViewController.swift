@@ -125,6 +125,7 @@ extension DialViewController {
                 self.performSegue(withIdentifier: "Video", sender: call)
             }
         }
+        dialParams.callOptions.isVideoEnabled = false
     }
 }
 
